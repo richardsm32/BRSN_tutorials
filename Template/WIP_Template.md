@@ -4,7 +4,6 @@ WIP Notes
 
 - Rough template ideas
 - Questions at the end of each numerical section
-- 
 
 # Title
 
