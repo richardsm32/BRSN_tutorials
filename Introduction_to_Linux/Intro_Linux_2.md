@@ -16,7 +16,7 @@
 ### 1.1 Prerequisite(s)
 
 - Completion of Intro to Linux part 1 (or at least familiarity of the material)
-- Shell environment (WSL, Biocluster, online terminal)
+- `bash` command line (Ubuntu in WSL will be the default for all commands shown)
 
 ### 1.2 Objectives
 
@@ -70,7 +70,7 @@ whatis mkdir
   - Do as much as you can using the command names above, referring to `--help` if you're stuck
   - Clicking the expansion below will reveal all the suggested solutions
 
-1. Change directory to your 'root' directoty hint - "cd /"
+1. Change directory to your 'root' directoty hint - "`/` is root"
 2. Now go to your user folder (there is more than one way to do this)
 3. List the contents one item per line
 4. Now change directory to /home
@@ -79,15 +79,15 @@ whatis mkdir
 7. (Challenge) If you are in your home directory and want to change to root directory using the relative path, what is the command?
 
 <details>
-    <summary><b>Solutions</summary>
+    <summary><b>Solutions</b></summary>
       <ul>
-        <li>'cd /'</li>
-        <li>'cd ' OR 'cd /home/USERNAME' --> use `whoami` to find username OR `cd ~`</li>
-        <li>'ls -1'</li>
-        <li>'cd /home' (absolute path) OR 'cd ..' (relative path) </li>
-        <li>`-r` reverses the sort order, by defaults contents are sorted alphabetically</li>
-        <li>`-S` is the option (sort by file size), and `/tmp` is the argument</li>
-        <li>`cd ../..` - This goes up 2 parent directories (user --> home --> root)</li></b>
+        <li>cd /</li>
+        <li>cd  OR cd /home/USERNAME --> use whoami to find username OR cd ~</li>
+        <li>ls -1</li>
+        <li>cd /home (absolute path) OR cd .. (relative path) </li>
+        <li>-r reverses the sort order, by defaults contents are sorted alphabetically</li>
+        <li>-S is the option (sort by file size), and /tmp is the argument</li>
+        <li>cd ../.. - This goes up 2 parent directories (user --> home --> root)</li>
       </ul>
 </details>
 
@@ -103,11 +103,24 @@ whatis mkdir
 - View the help text using `mkdir --help`
 - It is best to only use options if you understand the consequences
 
+#### 3.11 A Note About Directory Structure
+
+- Previously `testdir` was used as a test directory
+  - `linux_workshop` will now be used, and the testfiles will attempt to relate to bioinformatics
+  - Examples will also try to emulate real world usage
+- In Ubuntu on WSL the user folder is blank upon account creation, in a full Ubuntu system you would have `Documents`, `Downloads`, `Photos`, etc.
+- As with filenames, it is important to have detailed names for directories
+  - It also helps to structure things so autocomplete can be used easily
+    - Use lower case
+    - Different starting letters
+      - eg. Using p for `projects` and `personal_files` causes an extra step in navigation before using tab. Instead use `projects` and `my_files` to avoid this (if possible)
+    - Using dates (YEAR.MO, YEAR-MON-DAY, etc.) can be a great way to keep items structured. Although this may come at the cost of convenience with tools like autocomplete, the benefits exceed the drawbacks when you are further into a structure and do not access it as often
+
 Try the commands
 
 ```bash
 cd
-mkdir -v testdir
+mkdir -v linux_workshop
 ```
 
 - **Discussion**
@@ -116,12 +129,12 @@ mkdir -v testdir
   - Which option should we use to create multiple nested directories?
 
 <details>
-    <summary><b>Solution</summary>
+    <summary><b>Solution</b></summary>
         <ul>
-            <li>The option -v is for verbose (prints out what the command is doing)</li>  
+            <li>The option -v is for <b>verbose</b> (prints out what the command is doing)</li>  
             <li>To create nested directories we need the option -p or --parents</li>
             <li>This will make parent directories as needed </li>
-            <li>Sometimes using the full name of the command options gives clarity to what the option is doing</li></b>
+            <li>Sometimes using the full name of the command options gives clarity to what the option is doing</li>
         </ul>
 </details>
 
@@ -130,19 +143,19 @@ mkdir -v testdir
 Additional commands
 
 ```bash
-mkdir --parents --verbose testdir/testdir1/testdir2
-mkdir -v testingdir0 testingdir1
+mkdir --parents --verbose linux_workshop/2021microbiome/raw_data
+mkdir -v scripts environments
 ```
 
 - **Discussion**
   - What is the resulting difference in these two commands?
 
 <details>
-    <summary><b>Solution</summary>
+    <summary><b>Solution</b></summary>
         <ul>
             <li>Nested directories vs. separate directories</li>
             <li>In the man page/help text you can determine if a command has multiple 'targets' by looking for the elipsis ("...")</li>
-            <li>If you have access to the command `tree` you can see this in the directory structure</li></b>
+            <li>If you have access to the command `tree` you can see this in the directory structure</li>
         </ul>
 </details>
 
@@ -157,24 +170,32 @@ mkdir -v testingdir0 testingdir1
 Try the commands
 
 ```bash
-cd && ls
-cd testdir
-touch file1 file2.txt
+cd && ls # uses the AND operator
+cd linux_workshop
+touch manifest.csv manifest.txt
 ```
 
 - Commands can be chained together in bash with `&&` (this is an operator)
-  - Note that other shells have different operators (eg. `;` in fish)
-- We will look at other operators later
-- File types must be assigned manually (`.txt` `.fastq` `.md` etc.)
+  - This means the second command will only execute after the first command is successful (logical `AND`)
+    - Using a semi-colon will ensure the 2nd command will execute regardless of the first command ie. `cd; ls`
+- File types must be assigned manually (`.txt`, `.fastq`, `.md`, etc.)
 
 #### Exercise 3.21
 
-- Create a file in testdir1 and testdir2 in a single command
-- Name these files whatever you would like
+```bash
+.
+└── 2021microbiome
+    ├── file1
+    └── raw_data
+        └── file2
+```
+
+- Create a file in 2021microbiome and raw_data (as shown above with file1 and file2) in a single command
+- Name them whatever you would like (or use file1 and file2 as defaults, we will delete them shortly)
 
 <details>
-    <summary><b>Solution</summary>
-        - touch testdir1/filewhatever testdir1/testdir2/filewhatever1</b>
+    <summary>Solution</summary>
+        - touch 2021microbiome/file1 2021microbiome/raw_data/file2
 </details>
 
 <br>
@@ -192,8 +213,8 @@ touch file1 file2.txt
   - which arguments should we use to be cautious when deleting files?
 
 <details>
-    <summary><b>Solution</summary>
-        - let's start by using -iv for interactive, verbose</b>
+    <summary><b>Solution</b></summary>
+        - let's start by using -iv for interactive, verbose
 </details>
 
 <br>
@@ -202,9 +223,9 @@ Try the commands
 
 ```bash
 cd && ls
-cd testdir/testdir1 && ls
-rm -iv filewhatever # substitute whichever filename you used
-rm -iv testdir2
+cd linux_workshop/2021microbiome && ls
+rm -iv file1 # substitute whichever filename you used
+rm -iv raw_data
 ```
 
 - \# is used to comment out code in bash, any text after the \# in the same line will not execute
@@ -218,12 +239,12 @@ rm -iv testdir2
   - Why didn't the last command work?
 
 <details>
-    <summary><b>Solution</summary>
+    <summary>Solution</summary>
         <ul>
             <li> Look at the documentation/arguments</li>
             <li> For a directory we need to use -r (recursive)</li>
             <li> Recursion - a method of solving a problem where the solution depends on solutions to smaller instances of the same problem </li>
-            <li><a>https://en.wikipedia.org/wiki/Recursion_(computer_science)</a></li></b>
+            <li><a>https://en.wikipedia.org/wiki/Recursion_(computer_science)</a></li>
         </ul>
 </details>
 
@@ -232,7 +253,7 @@ rm -iv testdir2
 Try the commands
 
 ```bash
-rm -ivr testdir2
+rm -ivr raw_data
 ```
 
 - This command descends into dir, removes files, then removes the dir itself
@@ -242,12 +263,12 @@ rm -ivr testdir2
 
 <details>
     <summary><b>Solution</b></summary>
-        <ul><b>
+        <ul>
             <li> For dissimilar files you can list each one separated by a space </li>
             <li> For common bioinformatics situations where filenames are very similar - we need to use wildcard matching </li>
-            <li> A string is generally a collection of characters </li>
-            <li> The asterisk symbol will match zero or more characters </li>
-        </p></b>
+            <li> A "string" is a collection of characters </li>
+            <li> The asterisk symbol will match zero or more characters - depending on where it is placed you can match specific patterns</li>
+        </p>
 </details>
 
 <br>
@@ -256,7 +277,7 @@ Try the commands
 
 ```bash
 cd && ls
-cd testdir/
+cd linux_workshop/
 touch filename{01..09}.cpp
 ls
 touch file{01..09}.py
@@ -275,7 +296,7 @@ Try the commands
 ```bash
 ls file*
 rm -Iv file* # remember this is the same as using ./file*
-# rm defaults to the current dir unless one is specified
+# rm defaults to the current dir (.) unless one is specified
 ls # also defaults to current dir, same as using ls .
 ```
 
@@ -322,10 +343,10 @@ ls # also defaults to current dir, same as using ls .
 
 <details>
     <summary><b>This will reveal all the answers, please go through as many as you can before looking</b></summary>
-        <ul><b>
+        <ul>
             <li> 1. `mkdir dir{A..Z}` and `mkdir dir{A..Z}{z..a} </li>
             <li> 2. `rm -rIv dir*` --> the I is for an interactive prompt, but now it only asks once for all the dirs together </li>
-        </p></b>
+        </ul>
 </details>
 
 <br>
