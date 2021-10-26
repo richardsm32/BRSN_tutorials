@@ -341,7 +341,7 @@ ll
 
 - Joke: How can you tell if someone uses Linux? - Oh don't worry about it they'll tell you themselves!
 - Linux and other computer tech often have little easter eggs and jokes - programmers do not take things too seriously
-  - sl (steam locomotive - 'trains' you not to mistype `ls`)
+  - sl (steam locomotive - 'trains' (ha) you not to mistype `ls`)
   - cowsay - like `echo` but with a cow using a speech bubble
 
 ```bash
